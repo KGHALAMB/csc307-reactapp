@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = 5000;
 
+const cors = require('cors');
+app.use(cors());
 app.use(express.json());
 
 const users = { 
@@ -35,7 +37,7 @@ const users = {
     ]
  }
 
- 
+
  app.delete('/users/:id/', (req, res) => {
     const id = req.params['id']; //or req.params.id
     let result = deleteUserById(id);
