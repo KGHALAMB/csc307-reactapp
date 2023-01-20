@@ -45,7 +45,7 @@ const users = {
     if (result === undefined || result.length == 0)
         res.status(404).send('Resource not found.');
     users['users_list'] = result
-    res.status(200).end();
+    res.status(204).end();
  });
 
 app.get('/', (req, res) => {
@@ -111,10 +111,23 @@ function findUserById(id) {
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
     addUser(userToAdd);
-    res.status(200).end();
+    res.status(201).send(userToAdd);
 });
 
+function uniqueIdGenerator(){
+    id = Math.floor(100000 + Math.random() * 900000);
+    for (let i = 0; i < users['users_list'].length; i++) {
+        if (id === users['users_list'][i]['id']) {
+            i = 0;
+            id = Math.floor(100000 + Math.random() * 900000);
+        }
+    }
+    return id
+}
+
 function addUser(user){
+    user['id'] = uniqueIdGenerator();
+    console.log(user)
     users['users_list'].push(user);
 }
 app.listen(port, () => {
