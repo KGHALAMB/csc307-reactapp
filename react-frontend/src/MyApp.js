@@ -5,7 +5,7 @@ import React, {useState, useEffect} from 'react';
 
 function MyApp() {
    const [characters, setCharacters] = useState([])
-  
+    
    async function makePostCall(person){
     try {
        const response = await axios.post('http://localhost:5000/users', person);
@@ -16,7 +16,22 @@ function MyApp() {
        return false;
       }
    }
-
+   async function deleteOne(index){
+      //find user that is getting deleted on front end
+      const updated = characters.filter((character, i) => {
+         return i === index
+      })[0];
+      try {
+         //call delete api using id of deleted element
+         const response = await axios.delete('http://localhost:5000/users/'.concat(updated.id));
+         return response.data.users_list;     
+      }
+      catch (error){
+         //We're not handling errors. Just logging into the console.
+         console.log(error); 
+         return false;         
+        }
+      }
    async function fetchAll(){
     try {
        const response = await axios.get('http://localhost:5000/users');
@@ -36,11 +51,12 @@ function MyApp() {
       });
    }, [] );
 
-   async function removeOneCharacter(index) {
+   function removeOneCharacter(index) {
+      deleteOne(index);
       const updated = characters.filter((character, i) => {
          return i !== index
       });
-      setCharacters(updated)
+      setCharacters(updated);
    }
    function updateList(person) { 
       makePostCall(person).then( result => {

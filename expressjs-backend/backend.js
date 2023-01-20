@@ -122,7 +122,7 @@ function uniqueIdGenerator(){
             id = Math.floor(100000 + Math.random() * 900000);
         }
     }
-    return id
+    return id.toString()
 }
 
 function addUser(user){
