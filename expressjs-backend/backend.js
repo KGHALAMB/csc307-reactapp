@@ -41,10 +41,10 @@ const users = {
  app.delete('/users/:id/', (req, res) => {
     const id = req.params['id']; //or req.params.id
     let result = deleteUserById(id);
-    
-    if (result === undefined || result.length == 0)
+
+    if (result === undefined || result.length === 0)
         res.status(404).send('Resource not found.');
-    users['users_list'] = result
+    users['users_list'] = result;
     res.status(204).end();
  });
 
@@ -95,7 +95,7 @@ const deleteUserById = (id) => {
 app.get('/users/:id', (req, res) => {
     const id = req.params['id']; //or req.params.id
     let result = findUserById(id);
-    if (result === undefined || result.length == 0)
+    if (result === undefined || result.length === 0)
         res.status(404).send('Resource not found.');
     else {
         result = {users_list: result};
@@ -105,7 +105,6 @@ app.get('/users/:id', (req, res) => {
 
 function findUserById(id) {
     return users['users_list'].find( (user) => user['id'] === id); // or line below
-    //return users['users_list'].filter( (user) => user['id'] === id);
 }
 
 app.post('/users', (req, res) => {
