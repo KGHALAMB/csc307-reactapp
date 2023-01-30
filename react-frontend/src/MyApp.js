@@ -22,7 +22,7 @@ function MyApp() {
       })[0];
       try {
          //call delete api using id of deleted element
-         const response = await axios.delete('http://localhost:5000/users/'.concat(updated.id));
+         const response = await axios.delete('http://localhost:5000/users/'.concat(updated._id));
          return response
          //return 201;     
       }
